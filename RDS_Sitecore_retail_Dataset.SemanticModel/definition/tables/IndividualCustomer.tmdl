@@ -1,0 +1,110 @@
+table IndividualCustomer
+	lineageTag: 8cd0446f-a3bf-423d-9bb3-a13d83379067
+
+	measure _CountRepeatCustomers = ```
+			
+			VAR val = CALCULATE(DISTINCTCOUNT(IndividualCustomer[CustomerId]),FILTER('IndividualCustomer',IndividualCustomer[_HasMultipleOrders]))
+			
+			RETURN
+			IF(ISBLANK(val),0,val)
+			
+			```
+		formatString: 0
+		lineageTag: 6cff884d-64a0-4868-b0c0-6d3c763dc3f1
+
+	measure _CountNewCustomers = ```
+			
+			VAR val = CALCULATE(DISTINCTCOUNT(IndividualCustomer[CustomerId]),FILTER('IndividualCustomer',NOT(IndividualCustomer[_HasMultipleOrders])))
+			
+			RETURN
+			IF(ISBLANK(val),0,val)
+			
+			```
+		formatString: 0
+		lineageTag: 6b5807c5-a821-4c3a-b3e1-3d95ff56336f
+
+	measure 'Multiple Orders' =
+			
+			VAR CustomerOrders = CALCULATETABLE(
+			    SUMMARIZE('Order', 'Order'[CustomerID], "OrderCount", COUNT('Order'[OrderID]))
+			)
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        COUNTROWS(CustomerOrders) > 1, TRUE(),
+			        COUNTROWS(CustomerOrders) = 1, FALSE(),
+			        BLANK()
+			    )
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: edc2fc77-97af-412b-9647-f4820b974236
+
+	measure _CountCustomersWithOrders = ```
+			
+			VAR val = CALCULATE(DISTINCTCOUNT(IndividualCustomer[CustomerId]),FILTER('IndividualCustomer',NOT(ISBLANK(IndividualCustomer[_HasMultipleOrders]))))
+			
+			RETURN
+			IF(ISBLANK(val),0,val)
+			
+			```
+		formatString: 0
+		lineageTag: 77937790-de99-416d-ad2a-f4c7b1a9ea02
+
+	column CustomerId
+		dataType: string
+		lineageTag: 0f9908dc-ceef-47ce-95a0-f34801ce5b85
+		summarizeBy: none
+		sourceColumn: CustomerId
+
+		annotation SummarizationSetBy = Automatic
+
+	column IndividualCustomerName
+		dataType: string
+		lineageTag: 087090ae-62b0-47e1-b8be-156d5df784b8
+		summarizeBy: none
+		sourceColumn: IndividualCustomerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column _HasMultipleOrders = ```
+			
+			VAR orderCount = COUNTROWS(FILTER('Order', 'Order'[CustomerID] = 'IndividualCustomer'[CustomerID]))
+			
+			RETURN 
+			SWITCH(
+			    TRUE(),
+			    orderCount > 1, TRUE(), 
+			    orderCount = 1, FALSE(),
+			    BLANK()
+			)
+			```
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d95d7edb-1248-4bcc-b5f8-d6b7309aa79a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column _RepeatOrNewCustomer = ```
+			
+			SWITCH(
+			    TRUE(),
+			    ISBLANK(IndividualCustomer[_HasMultipleOrders]),BLANK(),
+			    IndividualCustomer[_HasMultipleOrders], "Repeat customers", 
+			    NOT(IndividualCustomer[_HasMultipleOrders]), "New customers"
+			)
+			```
+		lineageTag: 0d5fa45f-0af5-44b8-b4b4-70ea9dd3e79b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition IndividualCustomer = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_IndividualCustomer = Source{[Schema="dbo",Item="IndividualCustomer"]}[Data]
+				in
+				    dbo_IndividualCustomer
+
+	annotation PBI_ResultType = Table
+

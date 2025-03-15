@@ -1,0 +1,58 @@
+table CustomerLocation
+	lineageTag: f55637d8-fa92-4fff-99fc-94fb06455919
+
+	column CustomerId
+		dataType: string
+		lineageTag: 181fbed9-2038-44f9-9e8d-d8419da9cdd0
+		summarizeBy: none
+		sourceColumn: CustomerId
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationId
+		dataType: string
+		lineageTag: bd5043b4-e87a-48fa-b84e-2316dc929ef3
+		summarizeBy: none
+		sourceColumn: LocationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column PeriodStartTimestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b3cf6c1d-7125-4369-9a4b-cdaf5bee7bec
+		summarizeBy: none
+		sourceColumn: PeriodStartTimestamp
+
+		variation Variation
+			isDefault
+			relationship: 0cbde6c8-6fcc-44b7-a560-6e5f8bdc83fe
+			defaultHierarchy: LocalDateTable_c3958e5e-1b31-45ad-9c9f-77cca13fc8b8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column PeriodEndTimestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6e0962c2-b1fb-4654-8d38-e173ebc4f803
+		summarizeBy: none
+		sourceColumn: PeriodEndTimestamp
+
+		variation Variation
+			isDefault
+			relationship: c505a38e-f80d-4a72-83a0-bf47b4305169
+			defaultHierarchy: LocalDateTable_ec7caace-a87d-4c12-9eb0-76d2552c3c9d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CustomerLocation = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_CustomerLocation = Source{[Schema="dbo",Item="CustomerLocation"]}[Data]
+				in
+				    dbo_CustomerLocation
+
+	annotation PBI_ResultType = Table
+

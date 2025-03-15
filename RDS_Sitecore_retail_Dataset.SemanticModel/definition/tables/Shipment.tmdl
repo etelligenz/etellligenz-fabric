@@ -1,0 +1,75 @@
+table Shipment
+	lineageTag: 9f85c48a-27ac-4061-ae4c-3337b864a39c
+
+	column ShipmentId
+		dataType: string
+		lineageTag: f59ab729-12e1-4345-91eb-de6f3de6ac89
+		summarizeBy: none
+		sourceColumn: ShipmentId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShipmentOrderId
+		dataType: string
+		lineageTag: e6c0f48d-7e75-4ac9-bde6-c9b43ef8be9a
+		summarizeBy: none
+		sourceColumn: ShipmentOrderId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShipmentFromLocationId
+		dataType: int64
+		formatString: 0
+		lineageTag: c7d568dd-a13c-494f-99dd-97401a1ee05d
+		summarizeBy: count
+		sourceColumn: ShipmentFromLocationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OriginationWarehouseId
+		dataType: int64
+		formatString: 0
+		lineageTag: 196e00d0-68da-4ae5-95b6-352475ee6f9c
+		summarizeBy: count
+		sourceColumn: OriginationWarehouseId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShipmentFromName
+		dataType: string
+		lineageTag: 385a2f2d-6342-422e-9265-e877bafdcb85
+		summarizeBy: none
+		sourceColumn: ShipmentFromName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShipmentToName
+		dataType: string
+		lineageTag: 4d834047-b25b-4f97-be28-9e20890fb253
+		summarizeBy: none
+		sourceColumn: ShipmentToName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShipmentToLocationId
+		dataType: int64
+		formatString: 0
+		lineageTag: f1b1e3ad-31db-4aad-922b-40c6b9113086
+		summarizeBy: none
+		sourceColumn: ShipmentToLocationId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Shipment = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_IndividualCustomer = Source{[Schema="dbo",Item="Shipment"]}[Data]
+				in
+				    dbo_IndividualCustomer
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

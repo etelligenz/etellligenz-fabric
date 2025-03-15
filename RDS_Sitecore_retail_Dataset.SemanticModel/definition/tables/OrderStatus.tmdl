@@ -1,0 +1,59 @@
+table OrderStatus
+	lineageTag: f86de5e7-20bb-4203-a0b5-99451c668b0d
+
+	column OrderId
+		dataType: string
+		lineageTag: eda21890-bdbf-44a8-a8ee-1210c307ffd4
+		summarizeBy: none
+		sourceColumn: OrderId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderStatusStartTimestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bf052fc8-a97d-4dd1-8f24-23f3f7b61ff9
+		summarizeBy: none
+		sourceColumn: OrderStatusStartTimestamp
+
+		variation Variation
+			isDefault
+			relationship: fcef690b-bf58-411c-abe7-dbdf2a9f38d2
+			defaultHierarchy: LocalDateTable_9e01098c-a155-44d5-912d-ab7deb18596d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderStatusEndTimestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b07a1bcf-11b0-414c-9787-1e13bc83e9f7
+		summarizeBy: none
+		sourceColumn: OrderStatusEndTimestamp
+
+		variation Variation
+			isDefault
+			relationship: 4d6f786e-985f-48b7-ba53-8c644b69b70b
+			defaultHierarchy: LocalDateTable_4a935be4-1775-49ba-8e2a-0df21e2ca8b9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderStatusTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 4c424c45-b98e-4a9f-ac18-3227df9bc0b3
+		summarizeBy: none
+		sourceColumn: OrderStatusTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OrderStatus = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_OrderStatus = Source{[Schema="dbo",Item="OrderStatus"]}[Data]
+				in
+				    dbo_OrderStatus
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Eventstream",
+    "displayName": "RDS_Sitecore_retail_OrdersSync"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e242becb-464a-ac9f-4cf7-66a5cd8729fa"
+  }
+}

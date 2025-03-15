@@ -1,0 +1,74 @@
+table ProductCharacteristic
+	lineageTag: 4174d2b6-e8ac-4b9b-a42d-9e9da0df3655
+
+	column ProductId
+		dataType: string
+		lineageTag: 98e61f64-3c7c-4d9e-aba5-a33ba2d06e3c
+		summarizeBy: none
+		sourceColumn: ProductId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductCharacteristicTypeId
+		dataType: string
+		lineageTag: 8411ad98-cbd7-4f35-805c-6fdd606b9f9c
+		summarizeBy: none
+		sourceColumn: ProductCharacteristicTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductCharacteristic
+		dataType: string
+		lineageTag: fa0f11f0-a8f2-4b56-8d48-16b076b816b7
+		summarizeBy: none
+		sourceColumn: ProductCharacteristic
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductCharacteristicPeriodStartDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f6562912-1029-4af5-8a58-95e7399c5262
+		summarizeBy: none
+		sourceColumn: ProductCharacteristicPeriodStartDate
+
+		variation Variation
+			isDefault
+			relationship: abc8f6ec-77c7-4bfd-8d75-007c2d4dc445
+			defaultHierarchy: LocalDateTable_05052ba2-2f69-4371-9528-40ad99e707e1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductCharacteristicPeriodEndDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0b4bb39a-8557-4a78-9690-c4f8a9200adb
+		summarizeBy: none
+		sourceColumn: ProductCharacteristicPeriodEndDate
+
+		variation Variation
+			isDefault
+			relationship: a8b90916-7ad8-420e-ae2d-c22571f261c8
+			defaultHierarchy: LocalDateTable_72680b2c-2475-48cb-a725-b339d12ee6d1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductCharacteristicNote
+		dataType: string
+		lineageTag: 69bd105a-ab06-4398-a721-313395981e05
+		summarizeBy: none
+		sourceColumn: ProductCharacteristicNote
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ProductCharacteristic = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_ProductCharacteristic = Source{[Schema="dbo",Item="ProductCharacteristic"]}[Data]
+				in
+				    dbo_ProductCharacteristic
+
+	annotation PBI_ResultType = Table
+

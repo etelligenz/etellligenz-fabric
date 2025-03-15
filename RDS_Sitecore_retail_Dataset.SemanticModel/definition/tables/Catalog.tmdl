@@ -1,0 +1,66 @@
+table Catalog
+	lineageTag: bb9d0d02-6cd1-4463-91d7-1a2b5f83508c
+
+	column CatalogId
+		dataType: string
+		lineageTag: 306adbfb-89ef-46e2-bdba-4b6f4fc7ad93
+		summarizeBy: none
+		sourceColumn: CatalogId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CatalogName
+		dataType: string
+		lineageTag: 7c3fe878-b919-4022-98dc-2846a0febe05
+		summarizeBy: none
+		sourceColumn: CatalogName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CatalogDescription
+		dataType: string
+		lineageTag: 1e46f139-6de0-4ae1-b168-aca4e177cdfa
+		summarizeBy: none
+		sourceColumn: CatalogDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column CatalogEffectivePeriodStartDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8ede587b-9c7e-4f28-b8f9-c9db9fc922cc
+		summarizeBy: none
+		sourceColumn: CatalogEffectivePeriodStartDate
+
+		variation Variation
+			isDefault
+			relationship: 70786cc2-27c1-4eb9-9428-86a215fc644f
+			defaultHierarchy: LocalDateTable_65e74c91-d7ce-44fa-8c72-ac400fb5f905.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CatalogEffectivePeriodEndDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 199201ab-dd1d-4249-9482-64eaaa921110
+		summarizeBy: none
+		sourceColumn: CatalogEffectivePeriodEndDate
+
+		variation Variation
+			isDefault
+			relationship: 4fd780ac-0e56-4655-ad5c-580f7ebae6f2
+			defaultHierarchy: LocalDateTable_45035585-f536-45af-82ed-3a2ddfa0d2c6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Catalog = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_Catalog = Source{[Schema="dbo",Item="Catalog"]}[Data]
+				in
+				    dbo_Catalog
+
+	annotation PBI_ResultType = Table
+

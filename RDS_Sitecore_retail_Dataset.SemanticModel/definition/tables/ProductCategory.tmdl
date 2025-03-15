@@ -1,0 +1,38 @@
+table ProductCategory
+	lineageTag: e52894bc-847b-4fa6-8664-babd348a9604
+
+	column ProductCategoryId
+		dataType: string
+		lineageTag: eaf4435a-ff65-483d-834c-3d9e5da8bccd
+		summarizeBy: none
+		sourceColumn: ProductCategoryId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductCategoryName
+		dataType: string
+		lineageTag: a273f256-44dd-48ff-901d-3f558a79bd99
+		summarizeBy: none
+		sourceColumn: ProductCategoryName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductCategoryDescription
+		dataType: string
+		lineageTag: 04d94c63-fcb1-4229-82d5-aecdd079a8a4
+		summarizeBy: none
+		sourceColumn: ProductCategoryDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ProductCategory = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_ProductCategory = Source{[Schema="dbo",Item="ProductCategory"]}[Data]
+				in
+				    dbo_ProductCategory
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,30 @@
+table ProductCharacteristicType
+	lineageTag: 709a0854-0377-4650-bd68-f13f6ebf4b0c
+
+	column ProductCharacteristicTypeId
+		dataType: string
+		lineageTag: eec33074-1601-404c-83c9-5ead715c1af8
+		summarizeBy: none
+		sourceColumn: ProductCharacteristicTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductCharacteristicTypeName
+		dataType: string
+		lineageTag: 2612a566-eb1d-4ee2-95af-1a2eba96aa5c
+		summarizeBy: none
+		sourceColumn: ProductCharacteristicTypeName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ProductCharacteristicType = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_ProductCharacteristicType = Source{[Schema="dbo",Item="ProductCharacteristicType"]}[Data]
+				in
+				    dbo_ProductCharacteristicType
+
+	annotation PBI_ResultType = Table
+

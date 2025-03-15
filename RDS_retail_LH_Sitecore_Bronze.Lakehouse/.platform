@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Lakehouse",
+    "displayName": "RDS_retail_LH_Sitecore_Bronze"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "5f4eaf3c-a65a-9767-4dc2-5f122f8fd291"
+  }
+}

@@ -1,0 +1,214 @@
+table Order
+	lineageTag: a1de6a41-8919-4106-816d-c0e82a0b94ab
+
+	measure _AvgOrderTotalAmount = AVERAGE('Order'[OrderTotalAmount])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: b95cf9ae-e2da-4f5c-ae81-1a515cae90b7
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure _AvgBasketSize = AVERAGE('Order'[NumberOfOrderLines])
+		lineageTag: 81f1f915-c54a-45c6-8702-69871830482d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure _DateRangeLabel = ```
+			
+			VAR firstDateSlicer = FORMAT(MIN('Date'[Date]), "Short Date")
+			VAR lastDateSlicer = FORMAT(MAX('Date'[Date]), "Short Date")
+			return SWITCH(TRUE(),   
+			              firstDateSlicer == BLANK() || lastDateSlicer == BLANK(), BLANK(),
+			              firstDateSlicer & " - " & lastDateSlicer)
+			```
+		lineageTag: 95aeed26-f1e0-4146-8485-7e1bc112dacc
+
+	measure _OrderTotalAmount =
+			
+			VAR sumOrderTotalAmount = SUM('Order'[OrderTotalAmount])
+			
+			RETURN
+			IF(ISBLANK(sumOrderTotalAmount),0,sumOrderTotalAmount)
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 9f18f8ab-8dcf-48bf-974f-ca01c2ecef3d
+
+	measure _OrderTotalAmountPrevPeriod =
+			
+			VAR SelectedStartDate = MIN('Date'[Date])
+			VAR SelectedEndDate = MAX('Date'[Date])
+			VAR PreviousPeriodStartDate = EOMONTH(SelectedStartDate, -2) + 1
+			VAR PreviousPeriodEndDate = EOMONTH(SelectedEndDate, -2) + DAY(EOMONTH(SelectedEndDate, -1))
+			RETURN
+			CALCULATE(
+			    SUM('Order'[OrderTotalAmount]),
+			    DATEADD('Date'[Date], -[_DaysInDateRangeFilter], DAY)
+			)
+		lineageTag: e58a3981-e191-4727-bf22-dccd5c719df2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure _DaysInDateRangeFilter = DATEDIFF(MIN('Date'[Date]), MAX('Date'[Date]),DAY) + 1
+		formatString: 0
+		lineageTag: f585f06c-35fa-4707-b6ad-15d4bf3aa51a
+
+	measure _OrderTotalAmountGrowthLabel = ```
+			
+			VAR val = [_OrderTotalAmountGrowth]
+			
+			RETURN 
+			    SWITCH(
+			        TRUE(), 
+			        val == BLANK(), "", 
+			        val < 0, "↘ " & ROUND((-1 * val * 100), 0) & "%", 
+			        val > 0, "↗ " & ROUND((val * 100), 0) & "%"
+			    )
+			```
+		lineageTag: 7e944cd1-d1e5-4f38-bea5-2283928c5b4d
+
+	measure _OrderTotalAmountGrowth = DIVIDE([_OrderTotalAmount]-[_OrderTotalAmountPrevPeriod],[_OrderTotalAmountPrevPeriod])
+		lineageTag: db71a485-98ec-4afc-8cca-f08c52600201
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure _AvgOrderTotalAmountPrevPeriod =
+			
+			CALCULATE(
+			    AVERAGE('Order'[OrderTotalAmount]),
+			    DATEADD('Date'[Date], -[_DaysInDateRangeFilter], DAY)
+			)
+		lineageTag: e8a77711-869d-40af-9a35-0954e84ceeeb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure _AvgOrderTotalAmountGrowth = DIVIDE([_AvgOrderTotalAmount]-[_AvgOrderTotalAmountPrevPeriod],[_AvgOrderTotalAmountPrevPeriod])
+		lineageTag: 67ad2841-e673-4f7f-a30e-df9c8779f16b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure _AvgOrderTotalAmountGrowthLabel = ```
+			
+			VAR val = [_AvgOrderTotalAmountGrowth]
+			
+			RETURN 
+			    SWITCH(
+			        TRUE(), 
+			        val == BLANK(), "", 
+			        val < 0, "↘ " & ROUND((-1 * val * 100), 0) & "%", 
+			        val > 0, "↗ " & ROUND((val * 100), 0) & "%"
+			    )
+			```
+		lineageTag: e35952bf-a3ad-4b36-b375-13e1f302b0a9
+
+	measure _OrderTotalAmountPrevYear =
+			
+			CALCULATE(
+			    SUM('Order'[OrderTotalAmount]),
+			    DATEADD('Date'[Date], -365, DAY)
+			)
+		lineageTag: 0d1aba17-0c51-460e-a462-80933150169a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure _AvgBasketSizePrevPeriod =
+			
+			CALCULATE(
+			    AVERAGE('Order'[NumberOfOrderLines]),
+			    DATEADD('Date'[Date], -[_DaysInDateRangeFilter], DAY)
+			)
+		lineageTag: 2326a969-886d-42a2-bb9f-0ef38173af2c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure _AvgBasketSizeGrowth = DIVIDE([_AvgBasketSize]-[_AvgBasketSizePrevPeriod],[_AvgBasketSizePrevPeriod])
+		lineageTag: 87291dab-331b-4f55-93ea-75ab7807eb50
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure _AvgBasketSizeGrowthLabel = ```
+			
+			VAR val = [_AvgBasketSizeGrowth]
+			
+			RETURN 
+			    SWITCH(
+			        TRUE(), 
+			        val == BLANK(), "", 
+			        val < 0, "↘ " & ROUND((-1 * val * 100), 0) & "%", 
+			        val > 0, "↗ " & ROUND((val * 100), 0) & "%"
+			    )
+			```
+		lineageTag: 3dfefb0f-3454-423b-ac08-35e93bd5b0e3
+
+	column OrderId
+		dataType: string
+		lineageTag: 9c203cc5-5a1c-4623-a88f-5694acdeeb71
+		summarizeBy: none
+		sourceColumn: OrderId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerId
+		dataType: string
+		lineageTag: 30ac3512-4e51-4830-a1bd-402b2e887019
+		summarizeBy: none
+		sourceColumn: CustomerId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 43755c1f-6396-4746-970b-32e96e907db9
+		summarizeBy: none
+		sourceColumn: OrderTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderBookedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 880ec067-5a69-479b-937f-db2facfbbc41
+		summarizeBy: none
+		sourceColumn: OrderBookedDate
+
+		variation Variation
+			isDefault
+			relationship: 7801a794-a16a-4b6a-9830-109ad4d6405d
+			defaultHierarchy: LocalDateTable_eba095ac-88d0-41bb-8794-26801776089b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderTotalAmount
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 7806185a-df25-4412-9c05-5719faa335d7
+		summarizeBy: sum
+		sourceColumn: OrderTotalAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumberOfOrderLines
+		dataType: int64
+		formatString: 0
+		lineageTag: 3b11ddc7-8d22-4daa-b673-c4250efaaccd
+		summarizeBy: sum
+		sourceColumn: NumberOfOrderLines
+
+		annotation SummarizationSetBy = Automatic
+
+	column _OrderBookedDate = DATE(FORMAT('Order'[OrderBookedDate], "yyyy"), FORMAT('Order'[OrderBookedDate], "m"), FORMAT('Order'[OrderBookedDate], "d"))
+		formatString: General Date
+		lineageTag: 72856638-9cda-44ac-a556-c483dc2de230
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Order = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_Order = Source{[Schema="dbo",Item="Order"]}[Data]
+				in
+				    dbo_Order
+
+	annotation PBI_ResultType = Table
+

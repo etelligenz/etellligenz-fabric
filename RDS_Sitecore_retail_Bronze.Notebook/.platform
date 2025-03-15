@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "RDS_Sitecore_retail_Bronze"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d8eb8b53-25a4-acce-4dfb-f3924894b49f"
+  }
+}

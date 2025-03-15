@@ -1,0 +1,78 @@
+table RetailProduct
+	lineageTag: 1391a75e-f5d8-4da3-b787-19498c586dc2
+
+	column ProductId
+		dataType: string
+		lineageTag: f42afb6f-6dd9-4d46-96f4-0fd967b4b300
+		summarizeBy: none
+		sourceColumn: ProductId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: 3771015d-538a-4797-bc20-94cd703201cd
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductDescription
+		dataType: string
+		lineageTag: 885f6ef2-8ab0-4654-9712-fc1545fac87b
+		summarizeBy: none
+		sourceColumn: ProductDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReturnPolicyStatement
+		dataType: string
+		lineageTag: 5a2ba66e-678c-4af7-8960-3529000dd428
+		summarizeBy: none
+		sourceColumn: ReturnPolicyStatement
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReturnPolicyPeriodInDays
+		dataType: string
+		lineageTag: 10ac3e9c-c41e-4550-a0d8-56c77b9f8a8c
+		summarizeBy: none
+		sourceColumn: ReturnPolicyPeriodInDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column ItemSku
+		dataType: string
+		lineageTag: a1b5719f-e2e5-4929-9fa7-7d7fc99c7b14
+		summarizeBy: none
+		sourceColumn: ItemSku
+
+		annotation SummarizationSetBy = Automatic
+
+	column CatalogId
+		dataType: string
+		lineageTag: 430bc35a-0103-4e38-9748-567729f80000
+		summarizeBy: none
+		sourceColumn: CatalogId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CategoryId
+		dataType: string
+		lineageTag: 4a3b2285-bc40-4f33-ba58-4a4578885413
+		summarizeBy: none
+		sourceColumn: CategoryId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition RetailProduct = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_RetailProduct = Source{[Schema="dbo",Item="RetailProduct"]}[Data]
+				in
+				    dbo_RetailProduct
+
+	annotation PBI_ResultType = Table
+

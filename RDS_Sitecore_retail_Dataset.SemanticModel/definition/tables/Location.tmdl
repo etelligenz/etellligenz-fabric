@@ -1,0 +1,63 @@
+table Location
+	lineageTag: d4022c8e-49d6-4847-9aad-fef3ea4bcb69
+
+	column LocationId
+		dataType: string
+		lineageTag: 53cbe689-481e-4d97-842c-0235b3383c2a
+		summarizeBy: none
+		sourceColumn: LocationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationAddressLine1
+		dataType: string
+		lineageTag: 92b2e8fc-b534-4b50-9249-8441028ecf96
+		summarizeBy: none
+		sourceColumn: LocationAddressLine1
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationAddressLine2
+		dataType: string
+		lineageTag: cd0fc733-ae3d-4ea5-901f-95398911f22c
+		summarizeBy: none
+		sourceColumn: LocationAddressLine2
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationCity
+		dataType: string
+		lineageTag: 9cb86a34-3425-4c94-a218-dd5f994de58b
+		summarizeBy: none
+		sourceColumn: LocationCity
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationZipCode
+		dataType: string
+		lineageTag: ed9863ad-6886-4548-9ce1-7a7c05519f31
+		summarizeBy: none
+		sourceColumn: LocationZipCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountryId
+		dataType: int64
+		formatString: 0
+		lineageTag: 21e43b9c-e204-48a2-ace5-ffd50006c795
+		summarizeBy: none
+		sourceColumn: CountryId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Location = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_Location = Source{[Schema="dbo",Item="Location"]}[Data]
+				in
+				    dbo_Location
+
+	annotation PBI_ResultType = Table
+

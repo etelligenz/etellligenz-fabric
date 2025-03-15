@@ -1,0 +1,38 @@
+table CustomerGroup
+	lineageTag: 1f4d5fe4-c065-4703-962c-e1eb4810bff1
+
+	column CustomerGroupId
+		dataType: string
+		lineageTag: 0619271a-fdb0-46f9-b1e1-595858606b65
+		summarizeBy: none
+		sourceColumn: CustomerGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerGroupName
+		dataType: string
+		lineageTag: 68d77bc4-6ddd-49d4-9318-40cfa7c5c2b9
+		summarizeBy: none
+		sourceColumn: CustomerGroupName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerGroupDescription
+		dataType: string
+		lineageTag: e47538c0-24d6-4127-b64c-54e9c06b64a5
+		summarizeBy: none
+		sourceColumn: CustomerGroupDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CustomerGroup = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_IndividualCustomer = Source{[Schema="dbo",Item="CustomerGroup"]}[Data]
+				in
+				    dbo_IndividualCustomer
+
+	annotation PBI_ResultType = Table
+

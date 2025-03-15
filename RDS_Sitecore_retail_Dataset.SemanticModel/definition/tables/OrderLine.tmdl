@@ -1,0 +1,67 @@
+table OrderLine
+	lineageTag: 456e3c6f-b04d-4fd4-a452-8a263353c0ef
+
+	column OrderId
+		dataType: string
+		lineageTag: f929042d-204d-46be-97b3-abfb402defa0
+		summarizeBy: none
+		sourceColumn: OrderId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderLineId
+		dataType: string
+		lineageTag: 19d6ff41-5681-492d-aabb-c838751e16cc
+		summarizeBy: none
+		sourceColumn: OrderLineId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductId
+		dataType: string
+		lineageTag: 0ab36300-fa84-442d-a38c-17e9440fabdf
+		summarizeBy: none
+		sourceColumn: ProductId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductSalesPriceAmount
+		dataType: double
+		lineageTag: c99d9761-f4cb-4281-8e1b-af473c77f4f5
+		summarizeBy: sum
+		sourceColumn: ProductSalesPriceAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Quantity
+		dataType: double
+		lineageTag: e68015cd-f63b-43d3-9a1f-8c5629c602a7
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalOrderLineAmount
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: cb0c61ab-4d05-47c2-9005-849370afb0d5
+		summarizeBy: sum
+		sourceColumn: TotalOrderLineAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OrderLine = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_OrderLine = Source{[Schema="dbo",Item="OrderLine"]}[Data]
+				in
+				    dbo_OrderLine
+
+	annotation PBI_ResultType = Table
+

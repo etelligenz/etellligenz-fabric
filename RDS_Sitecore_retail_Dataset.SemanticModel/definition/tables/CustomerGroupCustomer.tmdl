@@ -1,0 +1,68 @@
+table CustomerGroupCustomer
+	lineageTag: effba655-4b32-464d-9a4a-f764e68d4cb7
+
+	column CustomerGroupId
+		dataType: string
+		lineageTag: feff621d-cd4e-42d8-942c-435e9774aac3
+		summarizeBy: none
+		sourceColumn: CustomerGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerId
+		dataType: string
+		lineageTag: 2de8f6be-0630-4891-af94-2414cbb9afa7
+		summarizeBy: none
+		sourceColumn: CustomerId
+
+		annotation SummarizationSetBy = Automatic
+
+	column PeriodStartDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5fca7e3e-66df-4398-b79a-d9ac9f6f0356
+		summarizeBy: none
+		sourceColumn: PeriodStartDate
+
+		variation Variation
+			isDefault
+			relationship: d85511a7-a4e7-4626-a132-13f442969796
+			defaultHierarchy: LocalDateTable_a1f54775-b436-4f10-8e27-e2663e787823.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column PeriodEndDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: da584ec0-5c93-4e74-9239-1f5c92fc6f56
+		summarizeBy: none
+		sourceColumn: PeriodEndDate
+
+		variation Variation
+			isDefault
+			relationship: b83941a0-ea92-4042-a7ea-9637a4ea0300
+			defaultHierarchy: LocalDateTable_ec317827-bfa9-412f-ba59-83dd45a93939.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerGroupNote
+		dataType: string
+		lineageTag: 9189d16e-6d94-4723-818f-7cefa0ec973b
+		summarizeBy: none
+		sourceColumn: CustomerGroupNote
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CustomerGroupCustomer = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_IndividualCustomer = Source{[Schema="dbo",Item="CustomerGroupCustomer"]}[Data]
+				in
+				    dbo_IndividualCustomer
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

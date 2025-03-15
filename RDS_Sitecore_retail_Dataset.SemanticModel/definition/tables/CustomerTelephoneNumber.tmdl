@@ -1,0 +1,32 @@
+table CustomerTelephoneNumber
+	lineageTag: c8e9f085-b260-4e89-9dbe-e4b739949f20
+
+	column CustomerId
+		dataType: string
+		lineageTag: 195f0119-bc26-43fd-9229-7dc70d162ea4
+		summarizeBy: none
+		sourceColumn: CustomerId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TelephoneNumber
+		dataType: double
+		lineageTag: 9d1c73aa-031a-4c92-a5dc-26f90ac0faed
+		summarizeBy: sum
+		sourceColumn: TelephoneNumber
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition CustomerTelephoneNumber = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_CustomerTelephoneNumber = Source{[Schema="dbo",Item="CustomerTelephoneNumber"]}[Data]
+				in
+				    dbo_CustomerTelephoneNumber
+
+	annotation PBI_ResultType = Table
+

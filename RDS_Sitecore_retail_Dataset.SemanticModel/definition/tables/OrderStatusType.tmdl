@@ -1,0 +1,45 @@
+table OrderStatusType
+	lineageTag: 66f7a96d-2c84-4169-a537-554410b89127
+
+	column OrderStatusTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 12abd16a-b87c-45ca-aec9-0f51f7e931bd
+		summarizeBy: none
+		sourceColumn: OrderStatusTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderStatusTypeName
+		dataType: string
+		lineageTag: 90f4aab9-7a78-431c-a80d-af471d28adb1
+		summarizeBy: none
+		sourceColumn: OrderStatusTypeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderStatusTypeDescription
+		dataType: string
+		lineageTag: 435649d8-d82b-4fd2-bfcf-7cf58a7d0aa6
+		summarizeBy: none
+		sourceColumn: OrderStatusTypeDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column _OrderStatusForSalesRevenue = switch(OrderStatusType[OrderStatusTypeName],"Completed","Completed", "Open","Completed", "Returned","Returned/Canceled", "Canceled","Returned/Canceled", BLANK())
+		lineageTag: 232d1179-765c-4424-b0cb-9c6c38e04d60
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OrderStatusType = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_OrderStatusType = Source{[Schema="dbo",Item="OrderStatusType"]}[Data]
+				in
+				    dbo_OrderStatusType
+
+	annotation PBI_ResultType = Table
+

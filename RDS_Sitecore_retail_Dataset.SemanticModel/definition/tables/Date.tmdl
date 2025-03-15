@@ -1,0 +1,20 @@
+table Date
+	lineageTag: 339acfdc-3cb6-4d35-9282-69e77c9f900d
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: General Date
+		lineageTag: 45dcdbea-44ea-41ea-be42-cc66a265185a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = calculated
+		mode: import
+		source = CALENDAR(MIN('Order'[OrderBookedDate]), MAX('Order'[OrderBookedDate]))
+
+	annotation PBI_Id = 71b2f396e44e4d98b92c608152d5c93b
+

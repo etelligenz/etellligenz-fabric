@@ -1,0 +1,30 @@
+table CustomerEmail
+	lineageTag: ac8c3fa0-a190-47d0-8a2f-c4e034ac0070
+
+	column CustomerId
+		dataType: string
+		lineageTag: 291231bf-4c95-4922-a267-7df817aca693
+		summarizeBy: none
+		sourceColumn: CustomerId
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmailAddress
+		dataType: string
+		lineageTag: a8058520-3da0-46d5-9c2a-00cb6f904e08
+		summarizeBy: none
+		sourceColumn: EmailAddress
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CustomerEmail = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_CustomerEmail = Source{[Schema="dbo",Item="CustomerEmail"]}[Data]
+				in
+				    dbo_CustomerEmail
+
+	annotation PBI_ResultType = Table
+

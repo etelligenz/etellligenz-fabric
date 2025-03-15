@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "RDS_Sitecore_retail_Pipeline"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "cb30ac80-a12f-b3f3-4b8b-a4afa8b29c60"
+  }
+}

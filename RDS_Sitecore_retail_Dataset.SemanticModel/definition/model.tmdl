@@ -1,0 +1,55 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Catalog","Country","CustomerEmail","CustomerLocation","CustomerTelephoneNumber","IndividualCustomer","Item","Location","Order","OrderLineStatus","OrderLine","OrderStatus","OrderStatusType","OrderType","ProductCategory","ProductCharacteristic","ProductCharacteristicType","ProductRelationshipType","RelatedProduct","RetailProduct","CustomerGroup","CustomerGroupCustomer","Shipment"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.128.952.0 (24.04)
+
+ref table Catalog
+ref table DateTableTemplate_95d2666e-02f3-430a-ac20-d2c17723e40d
+ref table LocalDateTable_65e74c91-d7ce-44fa-8c72-ac400fb5f905
+ref table LocalDateTable_45035585-f536-45af-82ed-3a2ddfa0d2c6
+ref table Country
+ref table CustomerEmail
+ref table CustomerLocation
+ref table LocalDateTable_c3958e5e-1b31-45ad-9c9f-77cca13fc8b8
+ref table LocalDateTable_ec7caace-a87d-4c12-9eb0-76d2552c3c9d
+ref table CustomerTelephoneNumber
+ref table IndividualCustomer
+ref table Item
+ref table Location
+ref table Order
+ref table OrderLineStatus
+ref table LocalDateTable_8763d42c-b7a3-4875-9133-970db8d73af2
+ref table LocalDateTable_7441ae28-4750-4020-a07f-de9a2b95ef3d
+ref table OrderLine
+ref table OrderStatus
+ref table LocalDateTable_9e01098c-a155-44d5-912d-ab7deb18596d
+ref table LocalDateTable_4a935be4-1775-49ba-8e2a-0df21e2ca8b9
+ref table OrderStatusType
+ref table OrderType
+ref table ProductCategory
+ref table ProductCharacteristic
+ref table LocalDateTable_05052ba2-2f69-4371-9528-40ad99e707e1
+ref table LocalDateTable_72680b2c-2475-48cb-a725-b339d12ee6d1
+ref table ProductCharacteristicType
+ref table ProductRelationshipType
+ref table RelatedProduct
+ref table RetailProduct
+ref table Date
+ref table LocalDateTable_eba095ac-88d0-41bb-8794-26801776089b
+ref table CustomerGroup
+ref table CustomerGroupCustomer
+ref table LocalDateTable_a1f54775-b436-4f10-8e27-e2663e787823
+ref table LocalDateTable_ec317827-bfa9-412f-ba59-83dd45a93939
+ref table Shipment
+
+ref cultureInfo en-US
+

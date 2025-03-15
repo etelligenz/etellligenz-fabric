@@ -1,0 +1,177 @@
+relationship 70786cc2-27c1-4eb9-9428-86a215fc644f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Catalog.CatalogEffectivePeriodStartDate
+	toColumn: LocalDateTable_65e74c91-d7ce-44fa-8c72-ac400fb5f905.Date
+
+relationship 4fd780ac-0e56-4655-ad5c-580f7ebae6f2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Catalog.CatalogEffectivePeriodEndDate
+	toColumn: LocalDateTable_45035585-f536-45af-82ed-3a2ddfa0d2c6.Date
+
+relationship 0cbde6c8-6fcc-44b7-a560-6e5f8bdc83fe
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CustomerLocation.PeriodStartTimestamp
+	toColumn: LocalDateTable_c3958e5e-1b31-45ad-9c9f-77cca13fc8b8.Date
+
+relationship c505a38e-f80d-4a72-83a0-bf47b4305169
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CustomerLocation.PeriodEndTimestamp
+	toColumn: LocalDateTable_ec7caace-a87d-4c12-9eb0-76d2552c3c9d.Date
+
+relationship 6e4b7a2b-c489-4ac7-aedb-e86f0399e27c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: OrderLineStatus.OrderLineStatusStartTimestamp
+	toColumn: LocalDateTable_8763d42c-b7a3-4875-9133-970db8d73af2.Date
+
+relationship 47bac6c6-1976-42d1-b8fb-ed023671098a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: OrderLineStatus.OrderLineStatusEndTimestamp
+	toColumn: LocalDateTable_7441ae28-4750-4020-a07f-de9a2b95ef3d.Date
+
+relationship fcef690b-bf58-411c-abe7-dbdf2a9f38d2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: OrderStatus.OrderStatusStartTimestamp
+	toColumn: LocalDateTable_9e01098c-a155-44d5-912d-ab7deb18596d.Date
+
+relationship 4d6f786e-985f-48b7-ba53-8c644b69b70b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: OrderStatus.OrderStatusEndTimestamp
+	toColumn: LocalDateTable_4a935be4-1775-49ba-8e2a-0df21e2ca8b9.Date
+
+relationship abc8f6ec-77c7-4bfd-8d75-007c2d4dc445
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ProductCharacteristic.ProductCharacteristicPeriodStartDate
+	toColumn: LocalDateTable_05052ba2-2f69-4371-9528-40ad99e707e1.Date
+
+relationship a8b90916-7ad8-420e-ae2d-c22571f261c8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ProductCharacteristic.ProductCharacteristicPeriodEndDate
+	toColumn: LocalDateTable_72680b2c-2475-48cb-a725-b339d12ee6d1.Date
+
+relationship f941c13e-303e-45e2-9bd9-12eccaa222a9
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: IndividualCustomer.CustomerId
+	toColumn: CustomerEmail.CustomerId
+
+relationship 738de568-a009-4e2e-ab57-0651efd0dc48
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Location.LocationId
+	toColumn: CustomerLocation.LocationId
+
+relationship 2515612f-d924-44fe-ad7b-ac4137d642a7
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: RetailProduct.ProductId
+	toColumn: Item.ProductId
+
+relationship a9b6cead-b0ac-45ff-b756-b045d6c0a1e4
+	fromColumn: OrderLine.OrderId
+	toColumn: Order.OrderId
+
+relationship f534f6d6-e6fd-416f-a790-50f48d0c53a6
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: OrderStatus.OrderId
+	toColumn: Order.OrderId
+
+relationship d132e7d4-2b52-4b21-8037-8a01f4b1c82a
+	fromColumn: Order.OrderTypeId
+	toColumn: OrderType.OrderTypeId
+
+relationship 7b855098-369e-4aab-b921-f7b00778ecf9
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: OrderLine.OrderLineId
+	toColumn: OrderLineStatus.OrderLineId
+
+relationship 39ca5fb0-5b47-43fa-bb6d-8b67ea6f0f36
+	fromColumn: OrderStatus.OrderStatusTypeId
+	toColumn: OrderStatusType.OrderStatusTypeId
+
+relationship da093f19-f5b3-4ba3-8011-95b38af062c6
+	fromColumn: RelatedProduct.ProductRelationshipTypeId
+	toColumn: ProductRelationshipType.ProductRelationshipTypeId
+
+relationship eaec25b6-f639-47d7-b0cb-5354f8c9acce
+	fromColumn: Location.CountryId
+	toColumn: Country.CountryId
+
+relationship 111ecd95-85c2-411e-8656-37f980b2b0e3
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: CustomerTelephoneNumber.CustomerId
+	toColumn: IndividualCustomer.CustomerId
+
+relationship cdd503a9-46ee-46b6-9b18-eaa7e9bae908
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: CustomerLocation.CustomerId
+	toColumn: IndividualCustomer.CustomerId
+
+relationship e50addd0-ad84-4fc6-b672-21be0450b529
+	crossFilteringBehavior: bothDirections
+	fromColumn: Order.CustomerId
+	toColumn: IndividualCustomer.CustomerId
+
+relationship 0498adef-423a-4f7c-a560-6a15d55bc8f9
+	crossFilteringBehavior: bothDirections
+	fromColumn: OrderLine.ProductId
+	toColumn: RetailProduct.ProductId
+
+relationship de48dda2-651a-4a97-abc6-2922ec5937fe
+	fromColumn: ProductCharacteristic.ProductId
+	toColumn: RetailProduct.ProductId
+
+relationship a00e6d17-49eb-4ff7-ac08-3e91bf830f17
+	fromColumn: ProductCharacteristic.ProductCharacteristicTypeId
+	toColumn: ProductCharacteristicType.ProductCharacteristicTypeId
+
+relationship a22da467-0ebf-486c-8d04-1209c7bdba08
+	fromColumn: RelatedProduct.ProductId
+	toColumn: RetailProduct.ProductId
+
+relationship 0b471b58-0b17-44af-9bfd-3edaf07c4222
+	fromColumn: RetailProduct.CatalogId
+	toColumn: Catalog.CatalogId
+
+relationship d64918e4-45e0-4c5d-91ed-6b1056801b9d
+	fromColumn: RetailProduct.CategoryId
+	toColumn: ProductCategory.ProductCategoryId
+
+relationship be31f1f6-1f1b-4576-8675-bb2a47d5bb0c
+	fromColumn: Order._OrderBookedDate
+	toColumn: Date.Date
+
+relationship 7801a794-a16a-4b6a-9830-109ad4d6405d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Order.OrderBookedDate
+	toColumn: LocalDateTable_eba095ac-88d0-41bb-8794-26801776089b.Date
+
+relationship d85511a7-a4e7-4626-a132-13f442969796
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CustomerGroupCustomer.PeriodStartDate
+	toColumn: LocalDateTable_a1f54775-b436-4f10-8e27-e2663e787823.Date
+
+relationship b83941a0-ea92-4042-a7ea-9637a4ea0300
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CustomerGroupCustomer.PeriodEndDate
+	toColumn: LocalDateTable_ec317827-bfa9-412f-ba59-83dd45a93939.Date
+
+relationship AutoDetected_83ea28d5-4f0d-43ef-9177-1409d4ed9997
+	crossFilteringBehavior: bothDirections
+	fromColumn: CustomerGroupCustomer.CustomerGroupId
+	toColumn: CustomerGroup.CustomerGroupId
+
+relationship AutoDetected_2c5e71e9-c1bf-4136-8f44-785d889abb43
+	crossFilteringBehavior: bothDirections
+	fromColumn: CustomerGroupCustomer.CustomerId
+	toColumn: IndividualCustomer.CustomerId
+
+relationship de7e51df-df10-f789-cc11-c40976b013e0
+	crossFilteringBehavior: bothDirections
+	fromColumn: Shipment.ShipmentToLocationId
+	toColumn: Location.LocationId
+

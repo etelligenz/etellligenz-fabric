@@ -1,0 +1,47 @@
+table Country
+	lineageTag: 78c2f841-f791-4601-863f-13b5d67673ae
+
+	column CountryId
+		dataType: int64
+		formatString: 0
+		lineageTag: c558c9b2-4df2-49dd-9fa6-f7d059c19c7c
+		summarizeBy: none
+		sourceColumn: CountryId
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsoCountryName
+		dataType: string
+		lineageTag: eb715cc6-4bbb-4d24-bae0-3b067d1ffa0c
+		summarizeBy: none
+		sourceColumn: IsoCountryName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Iso2LetterCountryName
+		dataType: string
+		lineageTag: b2f56527-f654-403a-96b7-59e134b90a44
+		summarizeBy: none
+		sourceColumn: Iso2LetterCountryName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Iso3LetterCountryName
+		dataType: string
+		lineageTag: 62e33966-99e8-4ce2-8ec4-1df14cfe4656
+		summarizeBy: none
+		sourceColumn: Iso3LetterCountryName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Country = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_Country = Source{[Schema="dbo",Item="Country"]}[Data]
+				in
+				    dbo_Country
+
+	annotation PBI_ResultType = Table
+

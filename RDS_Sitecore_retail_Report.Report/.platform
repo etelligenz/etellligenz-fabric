@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "RDS_Sitecore_retail_Report",
+    "description": ""
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0e13d383-f7ff-8ee6-4dbe-c9dcaac7ce96"
+  }
+}

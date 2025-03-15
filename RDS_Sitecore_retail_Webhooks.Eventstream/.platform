@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Eventstream",
+    "displayName": "RDS_Sitecore_retail_Webhooks"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a75eff43-4efb-ac76-412a-a8d9c6d5355e"
+  }
+}

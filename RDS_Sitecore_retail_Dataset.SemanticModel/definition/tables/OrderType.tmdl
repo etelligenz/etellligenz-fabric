@@ -1,0 +1,39 @@
+table OrderType
+	lineageTag: fbfa534b-ad13-4b33-aa17-8ff1dc7f875b
+
+	column OrderTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 7cd9c7da-e134-4cea-a38c-658c144e4f1e
+		summarizeBy: none
+		sourceColumn: OrderTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderTypeName
+		dataType: string
+		lineageTag: 9ecc15b1-9391-4f46-9e74-96dea367d432
+		summarizeBy: none
+		sourceColumn: OrderTypeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderTypeDescription
+		dataType: string
+		lineageTag: 6934c2b6-db2e-4887-89f9-f37865b1e84b
+		summarizeBy: none
+		sourceColumn: OrderTypeDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OrderType = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("56rwo3jvbldu5c7lnlddncyqwm-6obeiht5lvtujkdzm2xb4sfa6e.datawarehouse.fabric.microsoft.com", "RDS_retail_LH_Sitecore_Silver"),
+				    dbo_OrderType = Source{[Schema="dbo",Item="OrderType"]}[Data]
+				in
+				    dbo_OrderType
+
+	annotation PBI_ResultType = Table
+
